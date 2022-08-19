@@ -7,12 +7,13 @@ Global Routers
 /seaarch -> Search
 
 User Routers
-/users/edit -> Edit User
-/users/delete -> Delete User
+/users/:id/ -> See User
+/users/logout -> Log Out
+/users/:id/edit -> Edit My Profile
+/users/:id/remove -> Delete My Profile
 
 Video Routers
-/videos/watch -> Watch Video
-/videos/edit -> Edit Video
-/videos/delete -> Delete Video
-/videos/comments -> Comment on a Video
-/videos/comments/delete -> Delete a Comment of a Video
+/videos/:id -> Watch Video
+/videos/:id/edit -> Edit Video
+/videos/:id/delete -> Delete Video
+/videos/upload -> Upload Video
