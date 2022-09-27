@@ -1,6 +1,4 @@
 import express from "express";
-import multer from "multer";
-import fs from "fs";
 import morgan, { format } from "morgan";
 import session from "express-session";
 import MongoStore from "connect-mongo";
@@ -26,6 +24,7 @@ app.use(
   })
 );
 app.use(localsMiddleware);
+app.use("/assets", express.static("assets"));
 app.use("/", rootRouter);
 app.use("/users", userRouter);
 app.use("/videos", videoRouter);
