@@ -4,13 +4,30 @@ const video = document.getElementById("preview");
 let stream;
 let recorder;
 let videoFile;
+let rerecordBtn;
 
 const handleDownload = () => {
   const a = document.createElement("a");
   a.href = videoFile;
   a.download = "Myrecording.webm";
-  document.body.appendChild(a);
+  document.main.appendChild(a);
   a.click();
+};
+
+const handleRerecordBtn = () => {
+  document.main.removeChild(rerecordBtn);
+  startBtn.innerText = "Start Recording";
+  startBtn.removeEventListener("click", handleDownload);
+  startBtn.addEventListener("click", handleStart);
+};
+
+const createRerecordBtn = () => {
+  const reset = document.createElement("button");
+  reset.innerText = "Rerecord Audio";
+  reset.id = "rerecordBtn";
+  document.body.appendChild(reset);
+  rerecordBtn = document.getElementById("rerecordBtn");
+  rerecordBtn.addEventListener("click", handleRerecordBtn);
 };
 
 const handleStop = () => {
@@ -18,6 +35,7 @@ const handleStop = () => {
   startBtn.removeEventListener("click", handleStop);
   startBtn.addEventListener("click", handleDownload);
   recorder.stop();
+  createRerecordBtn();
 };
 
 const handleStart = () => {
