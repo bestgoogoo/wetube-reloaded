@@ -8,6 +8,8 @@ header
           a(href="/profile") #{loggedInUser.name}`s Profile
         li
           a(href="/logout") Logout
+        li
+          a(href=`${loggedInUser._id}/remove`) Delete ID
       else
         li
           a(href="/join") Join
