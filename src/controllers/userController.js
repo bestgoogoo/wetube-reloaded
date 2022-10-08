@@ -140,6 +140,14 @@ export const logout = (req, res) => {
   return res.redirect("/");
 };
 
+export const getEdit = (req, res) => {
+  return res.render("edit-profile", { pageTitle: "Edit Profile" });
+};
+
+export const postEdit = (req, res) => {
+  return res.end();
+};
+
 export const edit = (req, res) => res.send("Edit User");
 export const see = (req, res) => res.send("My Profile");
 export const remove = (req, res) => res.send("Delete User");
