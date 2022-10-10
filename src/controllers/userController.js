@@ -3,6 +3,7 @@ import fetch from "node-fetch";
 import bcrypt from "bcrypt";
 
 export const getJoin = (req, res) => res.render("join", { pageTitle: "Join" });
+
 export const postJoin = async (req, res) => {
   const { name, username, email, password, password2, location } = req.body;
   const pageTitle = "Join";
@@ -59,7 +60,6 @@ export const postLogin = async (req, res) => {
   }
   req.session.loggedIn = true;
   req.session.user = user;
-  console.log(user);
   return res.redirect("/");
 };
 
@@ -144,10 +144,44 @@ export const getEdit = (req, res) => {
   return res.render("edit-profile", { pageTitle: "Edit Profile" });
 };
 
-export const postEdit = (req, res) => {
-  return res.end();
+export const postEdit = async (req, res) => {
+  const {
+    session: {
+      user: { _id },
+    },
+    body: { name, username, email, location },
+  } = req;
+  const findUsername = await User.findOne({ username });
+  const findEmail = await User.findOne({ email });
+  if (findUsername) {
+    if (findUsername.username === username && findUsername._id != _id) {
+      return res.render("edit-profile", {
+        pageTitle: "Edit Profile",
+        errorMessageUsername: "This Username is already taken.",
+      });
+    }
+  }
+  if (findEmail) {
+    if (findEmail.email === email && findEmail._id != _id) {
+      return res.render("edit-profile", {
+        pageTitle: "Edit Profile",
+        errorMessageEmail: "This Email is already taken.",
+      });
+    }
+  }
+  const updatedUser = await User.findByIdAndUpdate(
+    _id,
+    {
+      name,
+      username,
+      email,
+      location,
+    },
+    { new: true }
+  );
+  req.session.user = updatedUser;
+  return res.redirect("/");
 };
 
-export const edit = (req, res) => res.send("Edit User");
 export const see = (req, res) => res.send("My Profile");
 export const remove = (req, res) => res.send("Delete User");
