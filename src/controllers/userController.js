@@ -141,7 +141,9 @@ export const logout = (req, res) => {
 };
 
 export const getEdit = (req, res) => {
-  return res.render("edit-profile", { pageTitle: "Edit Profile" });
+  return res.render("templates/users/edit-profile", {
+    pageTitle: "Edit Profile",
+  });
 };
 
 export const postEdit = async (req, res) => {
@@ -155,7 +157,7 @@ export const postEdit = async (req, res) => {
   const findEmail = await User.findOne({ email });
   if (findUsername) {
     if (findUsername.username === username && findUsername._id != _id) {
-      return res.render("edit-profile", {
+      return res.render("templates/users/edit-profile", {
         pageTitle: "Edit Profile",
         errorMessageUsername: "This Username is already taken.",
       });
@@ -163,7 +165,7 @@ export const postEdit = async (req, res) => {
   }
   if (findEmail) {
     if (findEmail.email === email && findEmail._id != _id) {
-      return res.render("edit-profile", {
+      return res.render("templates/users/edit-profile", {
         pageTitle: "Edit Profile",
         errorMessageEmail: "This Email is already taken.",
       });
@@ -181,6 +183,42 @@ export const postEdit = async (req, res) => {
   );
   req.session.user = updatedUser;
   return res.redirect("/");
+};
+
+export const getChangePassword = (req, res) => {
+  if (req.session.user.socialOnly === true) {
+    return res.redirec("/");
+  }
+  return res.render("templates/users/change-password", {
+    pageTitle: "Change Password",
+  });
+};
+
+export const postChangePassword = async (req, res) => {
+  const pageTitle = "Change Password";
+  const {
+    session: {
+      user: { _id },
+    },
+    body: { oldPassword, newPassword, newPasswordConfirmation },
+  } = req;
+  const user = await User.findById(_id);
+  const ok = await bcrypt.compare(oldPassword, user.password);
+  if (!ok) {
+    return res.status(400).render("templates/users/change-password", {
+      pageTitle,
+      errorMessage: "The current password is incorrect.",
+    });
+  }
+  if (newPassword !== newPasswordConfirmation) {
+    return res.status(400).render("templates/users/change-password", {
+      pageTitle,
+      errorMessage: "This is not a matched password",
+    });
+  }
+  user.password = newPassword;
+  await user.save();
+  return res.redirect("/users/logout");
 };
 
 export const see = (req, res) => res.send("My Profile");
