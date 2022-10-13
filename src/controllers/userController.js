@@ -1,6 +1,7 @@
 import User from "../models/User";
 import fetch from "node-fetch";
 import bcrypt from "bcrypt";
+import { async } from "regenerator-runtime";
 
 export const getJoin = (req, res) => res.render("join", { pageTitle: "Join" });
 
@@ -149,9 +150,10 @@ export const getEdit = (req, res) => {
 export const postEdit = async (req, res) => {
   const {
     session: {
-      user: { _id },
+      user: { _id, avatarUrl },
     },
     body: { name, username, email, location },
+    file,
   } = req;
   const findUsername = await User.findOne({ username });
   const findEmail = await User.findOne({ email });
@@ -174,6 +176,7 @@ export const postEdit = async (req, res) => {
   const updatedUser = await User.findByIdAndUpdate(
     _id,
     {
+      avatarUrl: file ? file.path : avatarUrl,
       name,
       username,
       email,
@@ -222,4 +225,5 @@ export const postChangePassword = async (req, res) => {
 };
 
 export const see = (req, res) => res.send("My Profile");
+
 export const remove = (req, res) => res.send("Delete User");

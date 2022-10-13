@@ -2,7 +2,7 @@ extends templates/base
 
 block content
   div#videoContainer
-    video(src="https://serranoarevalo.github.io/notflix/9bfd1023900e31286103369c803c7ee9.ogv", controls, width="700")
+    video(src=`/${video.fileUrl}`, controls, width="700")
     div#videoControls
       button#play Play
       button#mute Mute
