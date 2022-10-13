@@ -1,3 +1,4 @@
+import Video from "../models/Video";
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
 
@@ -9,6 +10,7 @@ const userSchema = new mongoose.Schema({
   avatarUrl: String,
   socialOnly: { type: Boolean, default: false },
   location: String,
+  videos: [{ type: mongoose.Schema.Types.ObjectId, ref: "Video" }],
 });
 
 userSchema.pre("save", async function () {

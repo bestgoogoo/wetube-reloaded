@@ -1,7 +1,7 @@
 import User from "../models/User";
+import Video from "../models/Video";
 import fetch from "node-fetch";
 import bcrypt from "bcrypt";
-import { async } from "regenerator-runtime";
 
 export const getJoin = (req, res) => res.render("join", { pageTitle: "Join" });
 
@@ -224,6 +224,19 @@ export const postChangePassword = async (req, res) => {
   return res.redirect("/users/logout");
 };
 
-export const see = (req, res) => res.send("My Profile");
+export const see = async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findById(id).populate("videos");
+  if (!user) {
+    return res
+      .status(404)
+      .render("404", { pageTitle: "The user is not found." });
+  }
+  console.log(user);
+  return res.render("templates/users/profile", {
+    pageTitle: user.name,
+    user,
+  });
+};
 
 export const remove = (req, res) => res.send("Delete User");
