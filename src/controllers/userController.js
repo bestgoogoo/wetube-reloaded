@@ -3,20 +3,21 @@ import Video from "../models/Video";
 import fetch from "node-fetch";
 import bcrypt from "bcrypt";
 
-export const getJoin = (req, res) => res.render("join", { pageTitle: "Join" });
+export const getJoin = (req, res) =>
+  res.render("screens/root/join", { pageTitle: "Join" });
 
 export const postJoin = async (req, res) => {
   const { name, username, email, password, password2, location } = req.body;
   const pageTitle = "Join";
   const exists = await User.exists({ $or: [{ username }, { email }] });
   if (exists) {
-    return res.status(400).render("join", {
+    return res.status(400).render("screens/root/join", {
       pageTitle,
       errorMessage: "This Username or Email is already taken.",
     });
   }
   if (password !== password2) {
-    return res.status(400).render("join", {
+    return res.status(400).render("screens/root/join", {
       pageTitle,
       errorMessage: "Password confirmation does not match.",
     });
@@ -29,9 +30,9 @@ export const postJoin = async (req, res) => {
       password,
       location,
     });
-    return res.redirect("/login");
+    return res.redirect("/screens/root/login");
   } catch (error) {
-    return res.status(400).render("join", {
+    return res.status(400).render("screens/root/join", {
       pageTitle,
       errorMessage: error._message,
     });
@@ -39,7 +40,7 @@ export const postJoin = async (req, res) => {
 };
 
 export const getLogin = async (req, res) => {
-  res.render("login", { pageTitle: "Log In" });
+  res.render("screens/root/login", { pageTitle: "Log In" });
 };
 
 export const postLogin = async (req, res) => {
@@ -47,14 +48,14 @@ export const postLogin = async (req, res) => {
   const pageTitle = "Log In";
   const user = await User.findOne({ username, socialOnly: false });
   if (!user) {
-    return res.status(400).render("login", {
+    return res.status(400).render("screens/root/login", {
       pageTitle,
       errorMessage: "An account with this username does not exists.",
     });
   }
   const ok = await bcrypt.compare(password, user.password);
   if (!ok) {
-    return res.status(400).render("login", {
+    return res.status(400).render("screens/root/login", {
       pageTitle,
       errorMessage: "Wrong password.",
     });
@@ -142,7 +143,7 @@ export const logout = (req, res) => {
 };
 
 export const getEdit = (req, res) => {
-  return res.render("templates/users/edit-profile", {
+  return res.render("screens/users/edit-profile", {
     pageTitle: "Edit Profile",
   });
 };
@@ -159,7 +160,7 @@ export const postEdit = async (req, res) => {
   const findEmail = await User.findOne({ email });
   if (findUsername) {
     if (findUsername.username === username && findUsername._id != _id) {
-      return res.render("templates/users/edit-profile", {
+      return res.render("screens/users/edit-profile", {
         pageTitle: "Edit Profile",
         errorMessageUsername: "This Username is already taken.",
       });
@@ -167,7 +168,7 @@ export const postEdit = async (req, res) => {
   }
   if (findEmail) {
     if (findEmail.email === email && findEmail._id != _id) {
-      return res.render("templates/users/edit-profile", {
+      return res.render("screens/users/edit-profile", {
         pageTitle: "Edit Profile",
         errorMessageEmail: "This Email is already taken.",
       });
@@ -192,7 +193,7 @@ export const getChangePassword = (req, res) => {
   if (req.session.user.socialOnly === true) {
     return res.redirec("/");
   }
-  return res.render("templates/users/change-password", {
+  return res.render("screens/users/change-password", {
     pageTitle: "Change Password",
   });
 };
@@ -208,13 +209,13 @@ export const postChangePassword = async (req, res) => {
   const user = await User.findById(_id);
   const ok = await bcrypt.compare(oldPassword, user.password);
   if (!ok) {
-    return res.status(400).render("templates/users/change-password", {
+    return res.status(400).render("screens/users/change-password", {
       pageTitle,
       errorMessage: "The current password is incorrect.",
     });
   }
   if (newPassword !== newPasswordConfirmation) {
-    return res.status(400).render("templates/users/change-password", {
+    return res.status(400).render("screens/users/change-password", {
       pageTitle,
       errorMessage: "This is not a matched password",
     });
@@ -232,8 +233,7 @@ export const see = async (req, res) => {
       .status(404)
       .render("404", { pageTitle: "The user is not found." });
   }
-  console.log(user);
-  return res.render("templates/users/profile", {
+  return res.render("screens/users/profile", {
     pageTitle: user.name,
     user,
   });

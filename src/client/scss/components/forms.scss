@@ -1,0 +1,43 @@
+form {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 50px;
+  background-color: rgba($color: #000000, $alpha: 0.4);
+  border-radius: 4px;
+  font-weight: 500;
+  input,
+  button,
+  .cancle__btn {
+    all: unset;
+    padding: 15px 20px;
+    background-color: black;
+    border-radius: 2px;
+    font-size: 14px;
+    color: white;
+    margin-bottom: 10px;
+  }
+  input {
+    width: 90%;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+}
+
+.form__btn {
+  width: 98%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  text-transform: uppercase;
+  button,
+  .cancle__btn {
+    width: 40%;
+    background-color: rgba($color: $red, $alpha: 0.9);
+    text-align: center;
+    cursor: pointer;
+  }
+  .cancle__btn {
+    background-color: white;
+    color: $red;
+  }
+}

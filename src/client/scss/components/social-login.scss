@@ -1,0 +1,11 @@
+.social-login {
+  width: 100%;
+  margin-top: 60px;
+  display: flex;
+  justify-content: space-evenly;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  padding-top: 40px;
+  .social__btn {
+    font-size: 60px;
+  }
+}

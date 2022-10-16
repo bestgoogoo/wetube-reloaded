@@ -2,9 +2,12 @@ extends templates/base
 include mixins/video
 
 block content
-  form(method="GET")
-    input(type="text", placeholder="Search by title", name="keyword")
-    button Search
-  div
-    each video in videos
-      +video(video)
+    form(method="GET").search__form
+        input(type="text", placeholder="Search...", name="keyword")
+        button
+            i.fas.fa-search
+    div.video__grid
+        each video in videos
+            +video(video)
+        else
+            span.empty__message No Videos Found.

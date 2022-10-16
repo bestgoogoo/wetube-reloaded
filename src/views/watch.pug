@@ -1,32 +1,32 @@
 extends templates/base
 
 block content
-  div(data-id=video._id)#videoContainer
-    video(src=`/${video.fileUrl}`, controls, width="700")
-    div#videoControls
-      button#play Play
-      button#mute Mute
-      input(type="range", value=0.5, min="0", max="1", step="0.1")#volume
-      div
-        span#currenTime 00:00
-        span  / 
-        span#totalTime 00:00
-      div
-        input(type="range", value="0", min="0", step="1")#timeline
-      div
-        button#fullscreen Enter Full Screen
+    div(data-id=video._id)#videoContainer
+        video(src=`/${video.fileUrl}`, controls, width="700")
+        div#videoControls
+            button#play Play
+            button#mute Mute
+            input(type="range", value=0.5, min="0", max="1", step="0.1")#volume
+            div
+                span#currenTime 00:00
+                span  / 
+                span#totalTime 00:00
+            div
+                input(type="range", value="0", min="0", step="1")#timeline
+            div
+                button#fullscreen Enter Full Screen
 
-  div
-    p=video.description
-    small=video.createdAt
-  div
-    small Uploaded by 
-      a(href=`/users/${video.owner._id}`)=video.owner.name
-  if String(video.owner._id) === loggedInUser._id
-    hr
-    a(href=`${video.id}/edit`) Edit Video &rarr;
-    br
-    a(href=`${video.id}/delete`) Delete Video &rarr;
+    div
+        p=video.description
+        small=video.createdAt
+    div
+        small Uploaded by 
+            a(href=`/users/${video.owner._id}`)=video.owner.name
+    if String(video.owner._id) === loggedInUser._id
+        hr
+        a(href=`${video.id}/edit`) Edit Video &rarr;
+        br
+        a(href=`${video.id}/delete`) Delete Video &rarr;
 
 block scripts
-  script(src="/assets/js/videoPlayer.js")
+    script(src="/assets/js/videoPlayer.js")

@@ -1,0 +1,25 @@
+extends ../../templates/base
+include ../../mixins/video
+
+block content
+    div.profile-data
+        div.profile-data__img
+            if !loggedInUser.socialOnly
+                img(src="/" + user.avatarUrl).avatar
+            else
+                img(src=user.avatarUrl).avatar
+        div.profile-data__info
+            ul 
+                li Name: #{user.name}
+                li ID: #{user.username}
+                li Email: #{user.email}
+                li Where: #{user.location}
+            if String(loggedInUser._id) === String(user._id)
+                button
+                    a(href="/users/edit") Edit Profile
+
+    div.video__grid
+        each video in user.videos
+            +video(video)
+        else
+            li Sorry nothing found.

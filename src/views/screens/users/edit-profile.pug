@@ -1,0 +1,22 @@
+extends ../../templates/base
+
+block content
+    form(method="POST", enctype="multipart/form-data").edit-profile__form
+        label(for="avatar") Avatar
+        input(type="file", id="avatar", name="avatar", accept="image/*")
+        input(name="name", type="text", placeholder="Name", required, value=loggedInUser.name)
+        if errorMessageUsername
+            input(name="username", type="text", placeholder=errorMessageUsername, required).edit-profile__errorMessage
+        else
+            input(name="username", type="text", placeholder="Username", required, value=loggedInUser.username)
+        if errorMessageEmail
+            input(name="email", type="text", placeholder=errorMessageEmail, required).edit-profile__errorMessage
+        else
+            input(name="email", type="text", placeholder="Email", required, value=loggedInUser.email)
+        input(name="location", type="text", placeholder="Location", required, value=loggedInUser.location)
+        div.form__btn
+            a(href="/").cancle__btn Cancle
+            button Edit
+        if !loggedInUser.socialOnly
+            div.edit-profile__password
+                a(href="change-password") Change Password &rarr;
