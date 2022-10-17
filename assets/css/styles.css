@@ -170,6 +170,11 @@ header ul li {
 header ul i {
   font-size: 16px;
 }
+header ul .header__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 40%;
+}
 
 footer {
   text-align: center;
@@ -216,12 +221,6 @@ footer {
 }
 .auth-switch a {
   text-decoration: underline;
-}
-
-.avatar {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
 }
 
 form {
@@ -318,6 +317,19 @@ form input {
   justify-content: space-around;
   align-items: center;
   margin-bottom: 50px;
+}
+.profile-data .avatar,
+.profile-data .avatar__font {
+  width: 150px;
+  height: 150px;
+  border-radius: 40%;
+}
+.profile-data .avatar__font {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: grey;
+  font-size: 100px;
 }
 
 .profile-data__info {

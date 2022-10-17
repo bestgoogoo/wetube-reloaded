@@ -30,7 +30,7 @@ export const postJoin = async (req, res) => {
       password,
       location,
     });
-    return res.redirect("/screens/root/login");
+    return res.redirect("screens/root/login");
   } catch (error) {
     return res.status(400).render("screens/root/join", {
       pageTitle,
@@ -40,7 +40,7 @@ export const postJoin = async (req, res) => {
 };
 
 export const getLogin = async (req, res) => {
-  res.render("screens/root/login", { pageTitle: "Log In" });
+  return res.render("screens/root/login", { pageTitle: "Log In" });
 };
 
 export const postLogin = async (req, res) => {
@@ -174,6 +174,7 @@ export const postEdit = async (req, res) => {
       });
     }
   }
+
   const updatedUser = await User.findByIdAndUpdate(
     _id,
     {
@@ -227,7 +228,13 @@ export const postChangePassword = async (req, res) => {
 
 export const see = async (req, res) => {
   const { id } = req.params;
-  const user = await User.findById(id).populate("videos");
+  const user = await User.findById(id).populate({
+    path: "videos",
+    populate: {
+      path: "owner",
+      model: "User",
+    },
+  });
   if (!user) {
     return res
       .status(404)

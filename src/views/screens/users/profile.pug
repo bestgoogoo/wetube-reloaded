@@ -4,10 +4,13 @@ include ../../mixins/video
 block content
     div.profile-data
         div.profile-data__img
-            if !loggedInUser.socialOnly
-                img(src="/" + user.avatarUrl).avatar
+            if !loggedInUser.avatarUrl
+                div.avatar__font
+                    i.fas.fa-user
+            else if !loggedInUser.socialOnly
+                img(src="/" + loggedInUser.avatarUrl).avatar
             else
-                img(src=user.avatarUrl).avatar
+                img(src=loggedInUser.avatarUrl).avatar
         div.profile-data__info
             ul 
                 li Name: #{user.name}
