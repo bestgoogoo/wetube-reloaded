@@ -231,7 +231,7 @@ form {
   border-radius: 4px;
   font-weight: 500;
 }
-form input,
+form input:not(input[type=range]),
 form button,
 form .cancle__btn {
   all: unset;

@@ -9,6 +9,8 @@ const fullscreenBtn = document.getElementById("fullscreen");
 const videoContainer = document.getElementById("videoContainer");
 const videoControls = document.getElementById("videoControls");
 
+console.log("video Player");
+
 let controlsMovementTimeout = null;
 let controlsTimeout = null;
 let volumeValue = 0.5;
