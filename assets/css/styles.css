@@ -232,6 +232,11 @@ form {
   font-weight: 500;
 }
 form input:not(input[type=range]),
+form input {
+  width: 90%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+form input,
 form button,
 form .cancle__btn {
   all: unset;
@@ -241,10 +246,6 @@ form .cancle__btn {
   font-size: 14px;
   color: white;
   margin-bottom: 10px;
-}
-form input {
-  width: 90%;
-  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .form__btn {

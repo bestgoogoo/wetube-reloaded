@@ -9,10 +9,6 @@ const fullscreenBtn = document.getElementById("fullscreen");
 const videoContainer = document.getElementById("videoContainer");
 const videoControls = document.getElementById("videoControls");
 
-console.log("video Player");
-
-let controlsMovementTimeout = null;
-let controlsTimeout = null;
 let volumeValue = 0.5;
 video.volume = volumeValue;
 
@@ -48,7 +44,11 @@ const handleVolumeChange = (event) => {
 };
 
 const formatTime = (second) =>
-  new Date(second * 1000).toISOString().substring(11, 19);
+  new Date(second * 1000).toISOString().substring(14, 19);
+
+// 나중에 이거 수정해주기
+//if (video.duration >= 60*60*1000) => .substring(11, 19)
+//else => substring(14, 19)
 
 const handleLoadedmetadata = () => {
   totalTime.innerText = formatTime(Math.floor(video.duration));
@@ -78,23 +78,25 @@ const handleFullscreenClick = () => {
   }
 };
 
+let moveIntoScreenTimeout = null;
+let movementInScreenTimeout = null;
 const hideControls = () => videoControls.classList.remove("showing");
 
 const handleMouseMove = () => {
-  if (controlsTimeout) {
-    clearTimeout(controlsTimeout);
-    controlsTimeout = null;
+  if (moveIntoScreenTimeout) {
+    clearTimeout(moveIntoScreenTimeout);
+    moveIntoScreenTimeout = null;
   }
-  if (controlsMovementTimeout) {
-    clearTimeout(controlsMovementTimeout);
-    controlsMovementTimeout = null;
+  if (movementInScreenTimeout) {
+    clearTimeout(movementInScreenTimeout);
+    movementInScreenTimeout = null;
   }
   videoControls.classList.add("showing");
-  controlsMovementTimeout = setTimeout(hideControls, 3000);
+  movementInScreenTimeout = setTimeout(hideControls, 1000);
 };
 
 const handleMouseLeave = () => {
-  controlsTimeout = setTimeout(hideControls, 3000);
+  moveIntoScreenTimeout = setTimeout(hideControls, 1000);
 };
 
 const handlePlayKey = (event) => {

@@ -6,6 +6,11 @@ form {
   border-radius: 4px;
   font-weight: 500;
   input:not(input[type="range"]),
+  input {
+    width: 90%;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  input,
   button,
   .cancle__btn {
     all: unset;
@@ -15,10 +20,6 @@ form {
     font-size: 14px;
     color: white;
     margin-bottom: 10px;
-  }
-  input {
-    width: 90%;
-    border: 1px solid rgba(255, 255, 255, 0.2);
   }
 }
 
