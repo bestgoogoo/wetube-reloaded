@@ -8,9 +8,9 @@ block content
                 div.avatar__font
                     i.fas.fa-user
             else if !loggedInUser.socialOnly
-                img(src="/" + loggedInUser.avatarUrl).avatar
+                img(src="/" + loggedInUser.avatarUrl,crossorigin).avatar
             else
-                img(src=loggedInUser.avatarUrl).avatar
+                img(src=loggedInUser.avatarUrl,crossorigin).avatar
         div.profile-data__info
             ul 
                 li Name: #{user.name}

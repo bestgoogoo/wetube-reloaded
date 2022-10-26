@@ -10,6 +10,9 @@ const userSchema = new mongoose.Schema({
   avatarUrl: String,
   socialOnly: { type: Boolean, default: false },
   location: String,
+  comments: [
+    { type: mongoose.Schema.Types.ObjectId, required: true, ref: "Comment" },
+  ],
   videos: [{ type: mongoose.Schema.Types.ObjectId, ref: "Video" }],
 });
 
