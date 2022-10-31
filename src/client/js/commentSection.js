@@ -1,9 +1,7 @@
 const videoContainer = document.getElementById("videoContainer");
 const form = document.getElementById("commentForm");
 const comment = document.querySelector(".video__comment");
-const deleteCommentBtn = document.querySelector(
-  ".video__comment #deleteCommentBtn"
-);
+const deleteCommentBtn = document.getElementById("deleteCommentBtn");
 
 const addComment = (text, id) => {
   const videoComments = document.querySelector(".video__comments ul");
@@ -14,9 +12,11 @@ const addComment = (text, id) => {
   icon.className = "fas fa-comment";
   const span = document.createElement("span");
   span.innerText = ` ${text}`;
-  const deleteBtn = document.createElement("i");
-  deleteBtn.className = "fas fa-circle-xmark";
+  const deleteBtn = document.createElement("button");
   deleteBtn.setAttribute("id", "deleteCommentBtn");
+  const btnIcon = document.createElement("i");
+  btnIcon.className = "fas fa-circle-xmark";
+  deleteBtn.appendChild(btnIcon);
   newComment.appendChild(icon);
   newComment.appendChild(span);
   newComment.appendChild(deleteBtn);
@@ -38,17 +38,19 @@ const handleSubmit = async (event) => {
   });
   if (response.status === 201) {
     const { newCommentId } = await response.json();
-    console.log(newCommentId);
     addComment(text, newCommentId);
   }
-
   textarea.value = "";
 };
 
 const handleDeleteComment = async () => {
   const commentId = comment.dataset.id;
-  console.log(commentId);
-  await fetch(`/api/videos/${commentId}/comment`, { method: "DELETE" });
+  const { status } = await fetch(`/api/videos/${commentId}/comment`, {
+    method: "DELETE",
+  });
+  if (status === 200) {
+    comment.remove(commentId);
+  }
 };
 
 if (form) {

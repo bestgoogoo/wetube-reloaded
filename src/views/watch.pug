@@ -40,7 +40,8 @@ block content
                         i.fas.fa-comment
                         span  #{comment.text}
                         if String(comment.owner._id) === loggedInUser._id
-                            i.fas.fa-circle-xmark#deleteCommentBtn
+                            button#deleteCommentBtn
+                                i.fas.fa-circle-xmark
 
 block scripts
     script(src="/assets/js/videoPlayer.js")

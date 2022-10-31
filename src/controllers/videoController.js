@@ -157,11 +157,17 @@ export const createComment = async (req, res) => {
 export const deleteComment = async (req, res) => {
   const {
     params: { id },
+    session: {
+      user: { _id },
+    },
   } = req;
   const comment = await Comment.findById(id);
   if (!comment) {
     return res.sendStatus(404);
   }
-  await Comment.findByIdAndDelete(id);
-  return res.sendStatus(201);
+  if (String(comment.owner._id) !== String(_id)) {
+    return res.sendStatus(403);
+  }
+  await Comment.findByIdAndDelete(comment._id);
+  return res.sendStatus(200);
 };
