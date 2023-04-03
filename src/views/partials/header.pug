@@ -16,10 +16,10 @@ header
                     a(href=`/users/${loggedInUser._id}`)
                         if !loggedInUser.avatarUrl
                             i.fas.fa-user
-                        else if !loggedInUser.socialOnly
-                            img(src="/" + loggedInUser.avatarUrl,crossorigin).header__avatar
-                        else
+                        else if loggedInUser.avatarUrl.includes("github")
                             img(src=loggedInUser.avatarUrl,crossorigin).header__avatar
+                        else
+                            img(src="/" + loggedInUser.avatarUrl,crossorigin).header__avatar
                 li
                     a(href="/videos/upload") Upload Video
                 li
